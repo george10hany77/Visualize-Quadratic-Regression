@@ -23,7 +23,7 @@ void draw(){
     float y = map(points.get(i).y, 0, y_coordinate, height, 0);
     ellipse(x, y, 10, 10);
   }
-  for(int i = 0; i < 150; i++){
+  for(int i = 0; i < 150; i++){ // to make the drawing faster.
     if(points.size() > 1){
       gradientDescent();
       drawQuad();
@@ -45,6 +45,8 @@ void gradientDescent(){
     float guess = f(currX);
     float error = currY - guess;
     // tweak the weights
+    // the tweaking came from the partial derivatives of the function
+    // to optimize the "cost function" in the first place.
     b0 += error * learningRate;
     b1 += error * currX * learningRate;
     b2 += error * currX*currX * learningRate; 
@@ -53,21 +55,6 @@ void gradientDescent(){
 
 float f(float x){ // the function
   return b0 + b1*x + b2*x*x;
-}
-
-void drawLine(){
-  float x1 = 0;
-  float y1 = f(x1);
-  float x2 = x_coordinate;
-  float y2 = f(x2);
-
-  x1 = map(x1, 0, x_coordinate, 0, width);
-  y1 = map(y1, 0, y_coordinate, height, 0);
-  x2 = map(x2, 0, x_coordinate, 0, width);
-  y2 = map(y2, 0, y_coordinate, height, 0);
-  
-  stroke(255, 0, 100);
-  line(x1, y1, x2, y2);
 }
 
 void drawQuad(){
